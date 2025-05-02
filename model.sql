@@ -1,16 +1,68 @@
 
 
-CREATE TABLE "Bioinfo_task" (
-    "id" integer NOT NULL,
-    "seq_experiment_id" integer,
-    "pipeline_id" json NOT NULL,
-    "case_id" integer,
-    "patient_id" integer NOT NULL,
-    "date" timestamp NOT NULL,
-    "related_task" integer,
-    PRIMARY KEY ("id")
+
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'category') THEN
+        CREATE TYPE category AS ENUM (
+            'diagnostic_laboratory',
+            'healthcare_provider',
+            'research_institute',
+            'university'
+        );
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status') THEN
+        CREATE TYPE status AS ENUM (
+            'draft',
+            'unknown',
+            'active',
+            'revoke',
+            'completed',
+            'on-hold',
+            'incomplete'
+        );
+    END IF;
+        IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'practionner_role') THEN
+        CREATE TYPE status AS ENUM (
+            'doctor',
+            'geneticist'
+        );
+    END IF;
+END
+$$;
+CREATE TABLE IF NOT EXISTS  "Organization" (
+    "id" integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "code" varchar NOT NULL UNIQUE,
+    "name" varchar NOT NULL,
+    "category" org_cat NOT NULL
 );
 
+CREATE TABLE "Practitioner" (
+    "id" integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "last_name" varchar NOT NULL,
+    "first_name" varchar NOT NULL,
+    "licence" varchar UNIQUE,
+    "prefix" varchar,
+    "suffix" varchar
+);
+CREATE INDEX idx_practitioner_last_name ON "Practitioner" ("last_name");
+CREATE INDEX idx_practitioner_first_name ON "Practitioner" ("first_name");
+
+CREATE TABLE IF NOT EXISTS "Practitioner_role" (
+    "practitioner_id" integer REFERENCES "Practitioner"("id"),
+    "organization_id" integer REFERENCES "Organization"("id"),
+    "role" practionner_role NOT NULL,           
+    "email" varchar,         
+    "phone" varchar,                   
+    PRIMARY KEY ("practitioner_id", "organization_id")
+);
+CREATE INDEX IF NOT EXISTS idx_practitioner_role_practitioner_id 
+    ON "Practitioner_role" ("practitioner_id");
+
+CREATE INDEX IF NOT EXISTS idx_practitioner_role_organization_id 
+    ON "Practitioner_role" ("organization_id");
+
+-- -----
 
 
 CREATE TABLE "Obs_string" (
@@ -72,19 +124,7 @@ COMMENT ON COLUMN "Analysis_dir"."context" IS 'single, familial, both
 COMMENT ON COLUMN "Analysis_dir"."stage" IS 'pre-natal, post-natal, both';
 
 
-CREATE TABLE "Practitioner" (
-    "id" integer NOT NULL,
-    "last_name" varchar(30),
-    "first_name" varchar(50) NOT NULL,
-    "licence" varchar UNIQUE,
-    "prefix" varchar(10),
-    "suffix" varchar,
-    PRIMARY KEY ("id")
-);
 
-
-CREATE INDEX "Practitioner_name"
-ON "Practitioner" ("last_name", "first_name");
 
 
 CREATE TABLE "Obs_number" (
@@ -343,17 +383,7 @@ CREATE TABLE "Case_req_has_samples" (
 
 
 
-CREATE TABLE "Organization" (
-    "id" integer NOT NULL,
-    "code" varchar NOT NULL UNIQUE,
-    "name" varchar NOT NULL,
-    -- Diagnostic Laboratory, Healthcare Provider
-    -- Research Institute
-    -- University
-    "category" enum NOT NULL,
-    "" bigint,
-    PRIMARY KEY ("id")
-);
+
 
 COMMENT ON COLUMN "Organization"."category" IS 'Diagnostic Laboratory, Healthcare Provider
 Research Institute
