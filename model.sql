@@ -136,6 +136,13 @@ BEGIN
             'normal'
         );
     END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'disease_status') THEN
+        CREATE TYPE disease_status AS ENUM (
+            'affected',
+            'non_affected',
+            'unknown'
+        );
+    END IF;
 END;
 $$  LANGUAGE plpgsql;
 
@@ -308,7 +315,8 @@ CREATE TABLE IF NOT EXISTS "Family" (
     "case_id" INTEGER REFERENCES "Case" ("id") NOT NULL,
     "proband_id" INTEGER REFERENCES "Patient" ("id") NOT NULL,
     "family_member_id" INTEGER REFERENCES "Patient" ("id") NOT NULL,
-    "relationship_to_proband" family_relationship NOT NULL
+    "relationship_to_proband" family_relationship NOT NULL,
+    "disease_status" disease_status
 );
 CREATE INDEX IF NOT EXISTS idx_family_case_id ON "Family" ("case_id");
 CREATE INDEX IF NOT EXISTS idx_family_patient_id ON "Family" ("proband_id");
