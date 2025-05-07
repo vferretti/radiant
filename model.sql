@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS "observation_codes" (
 INSERT INTO "observation_codes" ("code", "name_en", "name_fr", "category", "description") VALUES
 ('phenotype', 'Clinical sign', 'Signe clinique', 'exam', NULL),
 ('condition', 'Condition', 'Condition', 'exam', NULL),
-('ethnicity', 'Ethnicity', 'Ethnicité', NULL)
+('ethnicity', 'Ethnicity', 'Ethnicité', 'social_history',NULL)
 ON CONFLICT (code) DO NOTHING;
 CREATE TABLE IF NOT EXISTS "onset_codes" (
     "code" VARCHAR PRIMARY KEY,
