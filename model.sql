@@ -21,7 +21,7 @@ BEGIN
             'unknown'
         );
     END IF;
-        IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'observation_category') THEN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'observation_category') THEN
         CREATE TYPE observation_category AS ENUM (
             'social_history',
             'vital_sign',
@@ -184,6 +184,7 @@ INSERT INTO "observation_codes" ("code", "name_en", "name_fr", "category", "desc
 ('condition', 'Condition', 'Condition', 'exam', NULL),
 ('ethnicity', 'Ethnicity', 'Ethnicité', 'social_history',NULL)
 ON CONFLICT (code) DO NOTHING;
+
 CREATE TABLE IF NOT EXISTS "onset_codes" (
     "code" VARCHAR PRIMARY KEY,
     "name_en" VARCHAR NOT NULL,
