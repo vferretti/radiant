@@ -207,11 +207,6 @@ CREATE TABLE IF NOT EXISTS "observation_codes" (
     "category" observation_category NOT NULL,
     "description" TEXT
 );
-INSERT INTO "observation_codes" ("code", "name_en", "name_fr", "category") VALUES
-('phenotype', 'Clinical sign', 'Signe clinique', 'exam'),
-('condition', 'Condition', 'Condition', 'exam'),
-('ethnicity', 'Ethnicity', 'Ethnicité', 'social_history')
-ON CONFLICT (code) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS "onset_codes" (
     "code" TEXT PRIMARY KEY,
@@ -220,19 +215,6 @@ CREATE TABLE IF NOT EXISTS "onset_codes" (
     "description" TEXT
 );
 
-INSERT INTO "onset_codes" ("code", "name_en", "name_fr") VALUES
-('unknown', 'Unknown', 'Inconnu'),
-('antenatal', 'Antenatal', 'Anténatale'),
-('congenital', 'Congenital', 'Congénitale'),
-('neonatal', 'Neonatal (< 28 days)', 'Néonatale (< 28 jours)'),
-('infantile', 'Infantile (>= 28 days and < 1 year)', 'Enfant en bas âge (>= 28 jours et < 1 an)'),
-('childhood', 'Childhood (>= 1 year and < 5 years)', 'Enfance (>= 1 an et < 5 ans)'),
-('juvenile', 'Juvenile (>= 5 years and < 16 years)', 'Juvénile (>= 5 ans et < 16 ans)'),
-('young_adult', 'Young Adult (>= 16 years and < 40 years)', 'Jeune adulte (>= 16 ans et < 40 ans)'),
-('middle_age', 'Middle Age (>= 40 years and < 60 years)', 'Adulte d''âge moyen (>= 40 ans et < 60 ans)'),
-('senior', 'Senior (>= 60 years)', 'Adulte sénior (>= 60 ans)')
-ON CONFLICT (code) DO NOTHING;
-
 CREATE TABLE IF NOT EXISTS "data_types" (
     "code" TEXT PRIMARY KEY,
     "name_en" TEXT NOT NULL,
@@ -240,49 +222,12 @@ CREATE TABLE IF NOT EXISTS "data_types" (
     "description" TEXT
 );
 
-INSERT INTO data_types (code, name_en, name_fr)
-VALUES
-  ('alir', 'Aligned Reads', 'Fragments alignés'),
-  ('snv', 'Germline SNV', 'SNV germinal'),
-  ('ssnv', 'Somatic SNV', 'SNV somatic'),
-  ('gcnv', 'Germline CNV', 'CNV germinal'),
-  ('scnv', 'Somatic CNV', 'CNV somatic'),
-  ('gsv', 'Germline SV', 'SV germinal'),
-  ('ssv', 'Somatic SV', 'SV somatic'),
-  ('somfu', 'Somatic Fusion Dragen VCF', 'VCF Dragen des fusions somatiques'),
-  ('ssup', 'Sequencing Data Supplement', 'Données de séquençage supplémentaires'),
-  ('igv', 'IGV Track', 'Track IGV'),
-  ('cnvvis', 'CNV Visualization', 'Visualization de CNVs'),
-  ('exp', 'Expression PNG', 'PNG des expressions'),
-  ('covgene', 'Coverage by Gene Report', 'Rapport de couverture par gène'),
-  ('qcrun', 'Sequencing Run QC Report', 'Rapport de controle de qualité de la run de séquençage'),
-  ('exomiser', 'Exomiser Report', 'Rapport Exomiser')
-  ON CONFLICT (code) DO NOTHING;
-
 CREATE TABLE IF NOT EXISTS "file_formats" (
     "code" TEXT PRIMARY KEY,
     "name_en" TEXT NOT NULL,
     "name_fr" TEXT,
     "description" TEXT
 );
-
-INSERT INTO file_formats (code, name_en, name_fr)
-VALUES
-  ('cram', 'CRAM File', 'Fichier CRAM'),
-  ('crai', 'CRAI Index File', 'Fichier d''index CRAI'),
-  ('vcf', 'VCF File', 'Fichier VCF'),
-  ('tbi', 'TBI Index File', 'Fichier d''index TBI'),
-  ('tgz', 'TGZ Archive File', 'Fichier d''archive TGZ'),
-  ('json', 'JSON File', 'Fichier JSON'),
-  ('html', 'HTML File', 'Fichier HTML'),
-  ('tsv', 'TSV File', 'Fichier TSV'),
-  ('bw', 'BW File', 'Fichier BW'),
-  ('bed', 'BED File', 'Fichier BED'),
-  ('png', 'PNG File', 'Fichier PNG'),
-  ('csv', 'CSV File', 'Fichier CSV'),
-  ('pdf', 'PDF File', 'Fichier PDF'),
-  ('txt', 'Text File', 'Fichier texte')
- ON CONFLICT (code) DO NOTHING;
 
 -- Actors ---------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS "organization" (
@@ -554,3 +499,60 @@ CREATE TABLE IF NOT EXISTS "document_has_patients" (
     "sample_id" INTEGER REFERENCES "sample" ("id"),
     PRIMARY KEY ("document_id", "patient_id", "case_id","sample_id")
 );
+-- Value Set Initial Codes -------------------------------------
+-- Should be in a different init script ------------------------
+INSERT INTO "observation_codes" ("code", "name_en", "name_fr", "category") VALUES
+('phenotype', 'Clinical sign', 'Signe clinique', 'exam'),
+('condition', 'Condition', 'Condition', 'exam'),
+('ethnicity', 'Ethnicity', 'Ethnicité', 'social_history')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "onset_codes" ("code", "name_en", "name_fr") VALUES
+('unknown', 'Unknown', 'Inconnu'),
+('antenatal', 'Antenatal', 'Anténatale'),
+('congenital', 'Congenital', 'Congénitale'),
+('neonatal', 'Neonatal (< 28 days)', 'Néonatale (< 28 jours)'),
+('infantile', 'Infantile (>= 28 days and < 1 year)', 'Enfant en bas âge (>= 28 jours et < 1 an)'),
+('childhood', 'Childhood (>= 1 year and < 5 years)', 'Enfance (>= 1 an et < 5 ans)'),
+('juvenile', 'Juvenile (>= 5 years and < 16 years)', 'Juvénile (>= 5 ans et < 16 ans)'),
+('young_adult', 'Young Adult (>= 16 years and < 40 years)', 'Jeune adulte (>= 16 ans et < 40 ans)'),
+('middle_age', 'Middle Age (>= 40 years and < 60 years)', 'Adulte d''âge moyen (>= 40 ans et < 60 ans)'),
+('senior', 'Senior (>= 60 years)', 'Adulte sénior (>= 60 ans)')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO data_types (code, name_en, name_fr)
+VALUES
+  ('alir', 'Aligned Reads', 'Fragments alignés'),
+  ('snv', 'Germline SNV', 'SNV germinal'),
+  ('ssnv', 'Somatic SNV', 'SNV somatic'),
+  ('gcnv', 'Germline CNV', 'CNV germinal'),
+  ('scnv', 'Somatic CNV', 'CNV somatic'),
+  ('gsv', 'Germline SV', 'SV germinal'),
+  ('ssv', 'Somatic SV', 'SV somatic'),
+  ('somfu', 'Somatic Fusion Dragen VCF', 'VCF Dragen des fusions somatiques'),
+  ('ssup', 'Sequencing Data Supplement', 'Données de séquençage supplémentaires'),
+  ('igv', 'IGV Track', 'Track IGV'),
+  ('cnvvis', 'CNV Visualization', 'Visualization de CNVs'),
+  ('exp', 'Expression PNG', 'PNG des expressions'),
+  ('covgene', 'Coverage by Gene Report', 'Rapport de couverture par gène'),
+  ('qcrun', 'Sequencing Run QC Report', 'Rapport de controle de qualité de la run de séquençage'),
+  ('exomiser', 'Exomiser Report', 'Rapport Exomiser')
+  ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO file_formats (code, name_en, name_fr)
+VALUES
+  ('cram', 'CRAM File', 'Fichier CRAM'),
+  ('crai', 'CRAI Index File', 'Fichier d''index CRAI'),
+  ('vcf', 'VCF File', 'Fichier VCF'),
+  ('tbi', 'TBI Index File', 'Fichier d''index TBI'),
+  ('tgz', 'TGZ Archive File', 'Fichier d''archive TGZ'),
+  ('json', 'JSON File', 'Fichier JSON'),
+  ('html', 'HTML File', 'Fichier HTML'),
+  ('tsv', 'TSV File', 'Fichier TSV'),
+  ('bw', 'BW File', 'Fichier BW'),
+  ('bed', 'BED File', 'Fichier BED'),
+  ('png', 'PNG File', 'Fichier PNG'),
+  ('csv', 'CSV File', 'Fichier CSV'),
+  ('pdf', 'PDF File', 'Fichier PDF'),
+  ('txt', 'Text File', 'Fichier texte')
+ ON CONFLICT (code) DO NOTHING;
