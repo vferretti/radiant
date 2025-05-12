@@ -236,8 +236,7 @@ INSERT INTO patient (id, submitter_id, person_id, sex, mrn, managing_organizatio
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO study (id, code, name, description) VALUES
-(1, 'CaG', 'CARTaGENE','CARTaGENE est une plateforme publique de recherche du CHU Sainte-Justine'),
-(2, 'NeuroDev', 'WGS for the investigation of neuro-developmental disorders', NULL)
+(1, 'NeuroDev', 'WGS for the investigation of neuro-developmental disorders', NULL)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO "study_has_patients" ("study_id", "patient_id") VALUES
