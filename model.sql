@@ -392,9 +392,6 @@ CREATE INDEX IF NOT EXISTS idx_service_requester_id ON "service_request" ("reque
 
 CREATE INDEX IF NOT EXISTS idx_service_performer_org_id ON "service_request" ("performer_org_id");
 
-
-
-
 --Observations ---------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS "observation_coding" (
@@ -535,304 +532,82 @@ CREATE TABLE IF NOT EXISTS "document_has_patients" (
 );
 -- Value Sets initial values -------------------------------------
 -- Should probably be in a different init script ------------------------
-INSERT INTO
-    "observation_codes" (
-        "code",
-        "name_en",
-        "name_fr",
-        "category"
-    )
-VALUES (
-        'phenotype',
-        'Clinical sign',
-        'Signe clinique',
-        'exam'
-    ),
-    (
-        'condition',
-        'Condition',
-        'Condition',
-        'exam'
-    ),
-    (
-        'ethnicity',
-        'Ethnicity',
-        'Ethnicité',
-        'social_history'
-    )
+INSERT INTO "observation_codes" ("code", "name_en", "name_fr", "category") 
+VALUES 
+    ('phenotype', 'Clinical sign', 'Signe clinique', 'exam'),
+    ('condition', 'Condition', 'Condition', 'exam'),
+    ('ethnicity', 'Ethnicity', 'Ethnicité', 'social_history')
 ON CONFLICT (code) DO NOTHING;
 
-INSERT INTO
-    "onset_codes" ("code", "name_en", "name_fr")
-VALUES (
-        'unknown',
-        'Unknown',
-        'Inconnu'
-    ),
-    (
-        'antenatal',
-        'Antenatal',
-        'Anténatale'
-    ),
-    (
-        'congenital',
-        'Congenital',
-        'Congénitale'
-    ),
-    (
-        'neonatal',
-        'Neonatal (< 28 days)',
-        'Néonatale (< 28 jours)'
-    ),
-    (
-        'infantile',
-        'Infantile (>= 28 days and < 1 year)',
-        'Enfant en bas âge (>= 28 jours et < 1 an)'
-    ),
-    (
-        'childhood',
-        'Childhood (>= 1 year and < 5 years)',
-        'Enfance (>= 1 an et < 5 ans)'
-    ),
-    (
-        'juvenile',
-        'Juvenile (>= 5 years and < 16 years)',
-        'Juvénile (>= 5 ans et < 16 ans)'
-    ),
-    (
-        'young_adult',
-        'Young Adult (>= 16 years and < 40 years)',
-        'Jeune adulte (>= 16 ans et < 40 ans)'
-    ),
-    (
-        'middle_age',
-        'Middle Age (>= 40 years and < 60 years)',
-        'Adulte d''âge moyen (>= 40 ans et < 60 ans)'
-    ),
-    (
-        'senior',
-        'Senior (>= 60 years)',
-        'Adulte sénior (>= 60 ans)'
-    )
+INSERT INTO "onset_codes" ("code", "name_en", "name_fr") 
+VALUES 
+    ('unknown', 'Unknown', 'Inconnu'),
+    ('antenatal', 'Antenatal', 'Anténatale'),
+    ('congenital', 'Congenital', 'Congénitale'),
+    ('neonatal', 'Neonatal (< 28 days)', 'Néonatale (< 28 jours)'),
+    ('infantile', 'Infantile (>= 28 days and < 1 year)', 'Enfant en bas âge (>= 28 jours et < 1 an)'),
+    ('childhood', 'Childhood (>= 1 year and < 5 years)', 'Enfance (>= 1 an et < 5 ans)'),
+    ('juvenile', 'Juvenile (>= 5 years and < 16 years)', 'Juvénile (>= 5 ans et < 16 ans)'),
+    ('young_adult', 'Young Adult (>= 16 years and < 40 years)', 'Jeune adulte (>= 16 ans et < 40 ans)'),
+    ('middle_age', 'Middle Age (>= 40 years and < 60 years)', 'Adulte d''âge moyen (>= 40 ans et < 60 ans)'),
+    ('senior', 'Senior (>= 60 years)', 'Adulte sénior (>= 60 ans)')
 ON CONFLICT (code) DO NOTHING;
 
-INSERT INTO
-    data_type_codes (code, name_en, name_fr)
-VALUES (
-        'alir',
-        'Aligned Reads',
-        'Fragments alignés'
-    ),
-    (
-        'snv',
-        'Germline SNV',
-        'SNV germinal'
-    ),
-    (
-        'ssnv',
-        'Somatic SNV',
-        'SNV somatic'
-    ),
-    (
-        'gcnv',
-        'Germline CNV',
-        'CNV germinal'
-    ),
-    (
-        'scnv',
-        'Somatic CNV',
-        'CNV somatic'
-    ),
-    (
-        'gsv',
-        'Germline SV',
-        'SV germinal'
-    ),
-    (
-        'ssv',
-        'Somatic SV',
-        'SV somatic'
-    ),
-    (
-        'somfu',
-        'Somatic Fusion Dragen VCF',
-        'VCF Dragen des fusions somatiques'
-    ),
-    (
-        'ssup',
-        'Sequencing Data Supplement',
-        'Données de séquençage supplémentaires'
-    ),
-    (
-        'igv',
-        'IGV Track',
-        'Track IGV'
-    ),
-    (
-        'cnvvis',
-        'CNV Visualization',
-        'Visualization de CNVs'
-    ),
-    (
-        'exp',
-        'Expression PNG',
-        'PNG des expressions'
-    ),
-    (
-        'covgene',
-        'Coverage by Gene Report',
-        'Rapport de couverture par gène'
-    ),
-    (
-        'qcrun',
-        'Sequencing Run QC Report',
-        'Rapport de controle de qualité de la run de séquençage'
-    ),
-    (
-        'exomiser',
-        'Exomiser Report',
-        'Rapport Exomiser'
-    )
+
+INSERT INTO data_type_codes (code, name_en, name_fr) 
+VALUES 
+    ('alir', 'Aligned Reads', 'Fragments alignés'),
+    ('snv', 'Germline SNV', 'SNV germinal'),
+    ('ssnv', 'Somatic SNV', 'SNV somatic'),
+    ('gcnv', 'Germline CNV', 'CNV germinal'),
+    ('scnv', 'Somatic CNV', 'CNV somatic'),
+    ('gsv', 'Germline SV', 'SV germinal'),
+    ('ssv', 'Somatic SV', 'SV somatic'),
+    ('somfu', 'Somatic Fusion Dragen VCF', 'VCF Dragen des fusions somatiques'),
+    ('ssup', 'Sequencing Data Supplement', 'Données de séquençage supplémentaires'),
+    ('igv', 'IGV Track', 'Track IGV'),
+    ('cnvvis', 'CNV Visualization', 'Visualization de CNVs'),
+    ('exp', 'Expression PNG', 'PNG des expressions'),
+    ('covgene', 'Coverage by Gene Report', 'Rapport de couverture par gène'),
+    ('qcrun', 'Sequencing Run QC Report', 'Rapport de controle de qualité de la run de séquençage'),
+    ('exomiser', 'Exomiser Report', 'Rapport Exomiser')
 ON CONFLICT (code) DO NOTHING;
 
-INSERT INTO
-    file_format_codes (code, name_en, name_fr)
-VALUES (
-        'cram',
-        'CRAM File',
-        'Fichier CRAM'
-    ),
-    (
-        'crai',
-        'CRAI Index File',
-        'Fichier d''index CRAI'
-    ),
-    (
-        'vcf',
-        'VCF File',
-        'Fichier VCF'
-    ),
-    (
-        'tbi',
-        'TBI Index File',
-        'Fichier d''index TBI'
-    ),
-    (
-        'tgz',
-        'TGZ Archive File',
-        'Fichier d''archive TGZ'
-    ),
-    (
-        'json',
-        'JSON File',
-        'Fichier JSON'
-    ),
-    (
-        'html',
-        'HTML File',
-        'Fichier HTML'
-    ),
-    (
-        'tsv',
-        'TSV File',
-        'Fichier TSV'
-    ),
+INSERT INTO file_format_codes (code, name_en, name_fr) 
+VALUES 
+    ('cram', 'CRAM File', 'Fichier CRAM'),
+    ('crai', 'CRAI Index File', 'Fichier d''index CRAI'),
+    ('vcf', 'VCF File', 'Fichier VCF'),
+    ('tbi', 'TBI Index File', 'Fichier d''index TBI'),
+    ('tgz', 'TGZ Archive File', 'Fichier d''archive TGZ'),
+    ('json', 'JSON File', 'Fichier JSON'),
+    ('html', 'HTML File', 'Fichier HTML'),
+    ('tsv', 'TSV File', 'Fichier TSV'),
     ('bw', 'BW File', 'Fichier BW'),
-    (
-        'bed',
-        'BED File',
-        'Fichier BED'
-    ),
-    (
-        'png',
-        'PNG File',
-        'Fichier PNG'
-    ),
-    (
-        'csv',
-        'CSV File',
-        'Fichier CSV'
-    ),
-    (
-        'pdf',
-        'PDF File',
-        'Fichier PDF'
-    ),
-    (
-        'txt',
-        'Text File',
-        'Fichier texte'
-    )
+    ('bed', 'BED File', 'Fichier BED'),
+    ('png', 'PNG File', 'Fichier PNG'),
+    ('csv', 'CSV File', 'Fichier CSV'),
+    ('pdf', 'PDF File', 'Fichier PDF'),
+    ('txt', 'Text File', 'Fichier texte')
 ON CONFLICT (code) DO NOTHING;
+
 
 -- Catalogs initial values ----------------------------
 
-INSERT INTO
-    analysis_catalog (
-        id,
-        code,
-        name_en,
-        name_fr,
-        genome,
-        family,
-        life_stage
-    )
-VALUES (
-        1,
-        'WGA',
-        'Whole Genome Analysis',
-        'Analyse du génome complet',
-        'germline',
-        'both',
-        'postnatal'
-    )
+INSERT INTO analysis_catalog (id, code, name_en, name_fr, genome, family, life_stage) 
+VALUES 
+    (1, 'WGA', 'Whole Genome Analysis', 'Analyse du génome complet', 'germline', 'both', 'postnatal') 
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO
-    service_catalog (
-        id,
-        code,
-        alias,
-        name_en,
-        name_fr,
-        experimental_strategy,
-        platform
-    )
-VALUES (
-        1,
-        'WGS',
-        '948004',
-        'Whole Genome Sequencing',
-        'Séquençage du génome complet',
-        'wgs',
-        'illumina'
-    )
+INSERT INTO service_catalog (id, code, alias, name_en, name_fr, experimental_strategy, platform) 
+VALUES 
+    (1, 'WGS', '948004', 'Whole Genome Sequencing', 'Séquençage du génome complet', 'wgs', 'illumina') 
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO
-    task_catalog (id, code, name_en, name_fr)
-VALUES (
-        1,
-        'NEBA',
-        'Normal Exome Bioinformatic Analysis',
-        'Analyse bioinformatique d''exomes normaux'
-    ),
-    (
-        2,
-        'TRBA',
-        'Transcriptome Bioinformatic Analysis',
-        'Analyse bioinformatique de transcriptomes'
-    ),
-    (
-        3,
-        'TEBA',
-        'Tumoral Exome Bioinformatic Analysis',
-        'Analyse bioinformatique d''exomes tumoraux'
-    ),
-    (
-        4,
-        'TNEBA',
-        'Tumor-Normal Exomes Bioinformatic Analysis',
-        'Analyse bioinformatique des exomes tumoraux et normaux'
-    )
+INSERT INTO task_catalog (id, code, name_en, name_fr) 
+VALUES 
+    (1, 'NEBA', 'Normal Exome Bioinformatic Analysis', 'Analyse bioinformatique d''exomes normaux'),
+    (2, 'TRBA', 'Transcriptome Bioinformatic Analysis', 'Analyse bioinformatique de transcriptomes'),
+    (3, 'TEBA', 'Tumoral Exome Bioinformatic Analysis', 'Analyse bioinformatique d''exomes tumoraux'),
+    (4, 'TNEBA', 'Tumor-Normal Exomes Bioinformatic Analysis', 'Analyse bioinformatique des exomes tumoraux et normaux') 
 ON CONFLICT (id) DO NOTHING;
