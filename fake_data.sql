@@ -335,17 +335,7 @@ INSERT INTO project (id, code, name, description) VALUES
 (2, 'N2', 'NeuroDev Phase II', 'Phase two NeuroDev cases')
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO "case" (
-    analysis_catalog_id, proband_id, project_id, event_id, type, status, priority,
-    life_stage,
-    requester_id,
-    performer_org_id,
-    created_on,
-    updated_on,
-    reflex_panel,
-    diagnosis_hypothesis,
-    note
-) VALUES
+ INSERT INTO "case" (id, analysis_catalog_id, proband_id, project_id, event_id, type, status, priority, life_stage, requester_id, performer_org_id, created_on, updated_on, reflex_panel, diagnosis_hypothesis, note) VALUES
 (1, 1, 3, 1, 1, 'familial_germline', 'active', 'routine', 'postnatal', 2, 6, '2021-09-12T13:08:00-04:00', '2021-09-12T13:08:00-04:00', False, 'This is a diagnosis hypothesis', 'Administrative comment'),
 (2, 1, 4, 1, 2, 'familial_germline', 'active', 'routine', 'postnatal', 8, 6, '2021-09-12T13:08:00-04:00', '2021-09-12T13:08:00-04:00', False, 'This is a diagnosis hypothesis', 'Administrative comment'),
 (3, 1, 8, 1, 3, 'familial_germline', 'active', 'routine', 'postnatal', 14, 6, '2021-09-12T13:08:00-04:00', '2021-09-12T13:08:00-04:00', False, 'This is a diagnosis hypothesis', 'Administrative comment'),
@@ -374,7 +364,7 @@ INSERT INTO family (id, submitter_id, case_id, proband_id, family_member_id, rel
 (3, '804', 2, 4, 5, 'father', 'non_affected'),
 (4, '804', 2, 4, 6, 'mother', 'affected'),
 (5, '805', 3, 8, 7, 'father', 'non_affected'),
-(6, '805', 3, 8, 9, 'mother', 'unkown'),
+(6, '805', 3, 8, 9, 'mother', 'unknown'),
 (7, '806', 4, 10, 11, 'father', 'non_affected'),
 (8, '806', 4, 10, 12, 'mother', 'non_affected'),
 (9, '807', 5, 15, 13, 'mother', 'affected'),
@@ -385,13 +375,13 @@ INSERT INTO family (id, submitter_id, case_id, proband_id, family_member_id, rel
 (14, '839', 7, 20, 21, 'father', 'affected'),
 (15, '869', 9, 23, 24, 'mother', 'non_affected'),
 (16, '869', 9, 23, 25, 'father', 'non_affected'),
-(17, '870', 10, 27, 26, 'father', 'unkown'),
+(17, '870', 10, 27, 26, 'father', 'unknown'),
 (18, '870', 10, 27, 28, 'mother', 'non_affected'),
 (19, '871', 11, 30, 29, 'father', 'non_affected'),
 (20, '871', 11, 30, 31, 'mother', 'affected'),
 (21, '912', 12, 34, 32, 'father', 'non_affected'),
 (22, '912', 12, 34, 33, 'mother', 'non_affected'),
-(23, '948', 13, 37, 35, 'father', 'unkown'),
+(23, '948', 13, 37, 35, 'father', 'unknown'),
 (24, '948', 13, 37, 36, 'mother', 'non_affected'),
 (25, '950', 14, 39, 38, 'mother', 'non_affected'),
 (26, '950', 14, 39, 40, 'father', 'non_affected'),
@@ -402,7 +392,7 @@ INSERT INTO family (id, submitter_id, case_id, proband_id, family_member_id, rel
 (31, '953', 17, 47, 48, 'father', 'affected'),
 (32, '953', 17, 47, 49, 'mother', 'non_affected'),
 (33, '954', 18, 50, 51, 'mother', 'non_affected'),
-(34, '954', 18, 50, 52, 'father', 'unkown'),
+(34, '954', 18, 50, 52, 'father', 'unknown'),
 (35, '956', 19, 55, 53, 'mother', 'non_affected'),
 (36, '956', 19, 55, 54, 'father', 'non_affected'),
 (37, '958', 20, 58, 56, 'father', 'affected'),

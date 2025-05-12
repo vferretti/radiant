@@ -452,10 +452,9 @@ CREATE TABLE IF NOT EXISTS "task" (
     "task_catalog_id" INTEGER REFERENCES "task_catalog" ("id") NOT NULL,
     "case_id" INTEGER REFERENCES "case" ("id") NOT NULL,
     "patient_id" INTEGER REFERENCES "patient" ("id") NOT NULL,
-    "performer_id" INTEGER REFERENCES "organization" ("id") NOT NULL,
+    "performer_org_id" INTEGER REFERENCES "organization" ("id") NOT NULL,
     "created_on" TIMESTAMP NOT NULL,
-    "updated_on" TIMESTAMP NOT NULL,
-    "note" text
+    "updated_on" TIMESTAMP NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS idx_task_case_id ON "task" ("case_id");
@@ -465,10 +464,7 @@ CREATE INDEX IF NOT EXISTS idx_task_patient_id ON "task" ("patient_id");
 CREATE TABLE IF NOT EXISTS "task_has_sequencing_experiments" (
     "task_id" INTEGER REFERENCES "task" ("id") NOT NULL,
     "sequencing_experiment_id" INTEGER REFERENCES "sequencing_experiment" ("id") NOT NULL,
-    PRIMARY KEY (
-        "task_id",
-        "sequencing_experiment_id"
-    )
+    PRIMARY KEY ("task_id", "sequencing_experiment_id")
 );
 
 CREATE TABLE IF NOT EXISTS "task_has_parent_tasks" (
@@ -511,11 +507,7 @@ CREATE TABLE IF NOT EXISTS "task_has_documents" (
     "task_id" INTEGER REFERENCES "task" ("id") NOT NULL,
     "document_id" INTEGER REFERENCES "document" ("id") NOT NULL,
     "io_type" io_type,
-    PRIMARY KEY (
-        "task_id",
-        "document_id",
-        "io_type"
-    )
+    PRIMARY KEY ("task_id", "document_id", "io_type")
 );
 
 CREATE TABLE IF NOT EXISTS "document_has_patients" (
@@ -523,12 +515,7 @@ CREATE TABLE IF NOT EXISTS "document_has_patients" (
     "patient_id" INTEGER REFERENCES "patient" ("id") NOT NULL,
     "case_id" INTEGER REFERENCES "case" ("id") NOT NULL,
     "sample_id" INTEGER REFERENCES "sample" ("id"),
-    PRIMARY KEY (
-        "document_id",
-        "patient_id",
-        "case_id",
-        "sample_id"
-    )
+    PRIMARY KEY ("document_id", "patient_id", "case_id", "sample_id")
 );
 -- Value Sets initial values -------------------------------------
 -- Should probably be in a different init script ------------------------
