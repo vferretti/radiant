@@ -1450,6 +1450,7 @@ INSERT INTO "document" (
     custodian_id,
     created_on
 ) VALUES
+VALUES
 (1, 'FI0037662.S13230.cram', 'genomic', 'alignment', 'cram', 110187385978, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c592', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (2, 'FI0037662.S13230.cram.crai', 'genomic', 'alignment', 'crai', 2453667, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c593', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (3, 'FI0037665.S13228.cram', 'genomic', 'alignment', 'cram', 109940425359, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c594', 6, '2021-10-12T13:08:00-04:00'::timestamp),
@@ -1476,7 +1477,7 @@ INSERT INTO "document" (
 (24, 'FI0037704.S13232.cram.crai', 'genomic', 'alignment', 'crai', 2348810, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c615', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (25, 'FI0037707.S14135.cram', 'genomic', 'alignment', 'cram', 96239479685, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c616', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (26, 'FI0037707.S14135.cram.crai', 'genomic', 'alignment', 'crai', 2747269, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c617', 6, '2021-10-12T13:08:00-04:00'::timestamp),
-(27, 'NA12878.recal.cram', 'genomic', 'alignment', 'cram', 118444460605, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c618', 6, '2021-10-12T13:08:00-04:00'::timestamp),
+(27, 'NA12878.recal.cram', 'genomic', 'alignment', 'cram', 118444460605, 's3://cqdg-prod-file-workspace/sarek/preprocessing/recalibrated/NA12878/NA12878.recal.cram', '5d41402abc4b2a76b9719d911017c618', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (28, 'NA12878.recal.crai', 'genomic', 'alignment', 'crai', 2579496, 's3://cqdg-prod-file-workspace/sarek/preprocessing/recalibrated/NA12878/NA12878.recal.crai', '5d41402abc4b2a76b9719d911017c619', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (29, 'FI0037713.S14752.cram', 'genomic', 'alignment', 'cram', 81615116042, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c620', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (30, 'FI0037713.S14752.cram.crai', 'genomic', 'alignment', 'crai', 2327838, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c621', 6, '2021-10-12T13:08:00-04:00'::timestamp),
@@ -1510,7 +1511,7 @@ INSERT INTO "document" (
 (58, 'FI0037747.S14138.cram.crai', 'genomic', 'alignment', 'crai', 2369781, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c649', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (59, 'FI0037755.S14858.cram', 'genomic', 'alignment', 'cram', 103970420817, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c650', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (60, 'FI0037755.S14858.cram.crai', 'genomic', 'alignment', 'crai', 2243952, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c651', 6, '2021-10-12T13:08:00-04:00'::timestamp),
-(61, 'NA12892.recal.cram', 'genomic', 'alignment', 'cram', 105087112314, 's3://cqdg-prod-file-workspace/sarek/preprocessing/recalibrated/NA12892/NA12892.recal.cra', '5d41402abc4b2a76b9719d911017c652', 6, '2021-10-12T13:08:00-04:00'::timestamp),
+(61, 'NA12892.recal.cram', 'genomic', 'alignment', 'cram', 105087112314, 's3://cqdg-prod-file-workspace/sarek/preprocessing/recalibrated/NA12892/NA12892.recal.cram', '5d41402abc4b2a76b9719d911017c652', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (62, 'NA12892.recal.crai', 'genomic', 'alignment', 'crai', 2474639, 's3://cqdg-prod-file-workspace/sarek/preprocessing/recalibrated/NA12892/NA12892.recal.crai', '5d41402abc4b2a76b9719d911017c653', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (63, 'FI0037766.S14747.cram', 'genomic', 'alignment', 'cram', 67881958113, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c654', 6, '2021-10-12T13:08:00-04:00'::timestamp),
 (64, 'FI0037766.S14747.cram.crai', 'genomic', 'alignment', 'crai', 1887436, 's3://cqdg-prod-file-workspace/sarek/preprocessing/', '5d41402abc4b2a76b9719d911017c655', 6, '2021-10-12T13:08:00-04:00'::timestamp),
