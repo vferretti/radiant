@@ -169,6 +169,117 @@ BEGIN
 END;
 $$  LANGUAGE plpgsql;
 
+CREATE TABLE IF NOT EXISTS "organization_categories" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "practitioner_roles" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "sexes" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "observation_categories" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "genome_analysis_types" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "family_analysis_types" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "life_stage_types" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "case_types" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "request_statuses" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "request_priorities" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "event_types" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "experimental_strategies" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "technology_platforms" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "family_relationships" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "obs_interpretations" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "sample_categories" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "sample_types" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "histology_types" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "affected_statuses" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "age_units" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "io_types" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "data_categories" (
+    "code" TEXT PRIMARY KEY,
+    "name_en" TEXT NOT NULL
+);
+
+
 -- Value Sets ---------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS "observation_codes" (
@@ -467,10 +578,10 @@ CREATE TABLE IF NOT EXISTS "task_has_sequencing_experiments" (
     PRIMARY KEY ("task_id", "sequencing_experiment_id")
 );
 
-CREATE TABLE IF NOT EXISTS "task_has_parent_tasks" (
+CREATE TABLE IF NOT EXISTS "task_has_related_tasks" (
     "task_id" INTEGER REFERENCES "task" ("id") NOT NULL,
-    "parent_task_id" INTEGER REFERENCES "task" ("id") NOT NULL,
-    PRIMARY KEY ("task_id", "parent_task_id")
+    "related_task_id" INTEGER REFERENCES "task" ("id") NOT NULL,
+    PRIMARY KEY ("task_id", "related_task_id")
 );
 
 CREATE TABLE IF NOT EXISTS "task_has_workflows" (
@@ -490,7 +601,7 @@ CREATE TABLE IF NOT EXISTS "document" (
     "data_category" data_category NOT NULL,
     "data_type" TEXT REFERENCES "data_type_codes" ("code") NOT NULL,
     "format" TEXT REFERENCES "file_format_codes" ("code") NOT NULL,
-    "size" INTEGER NOT NULL,
+    "size" BIGINT NOT NULL,
     "url" TEXT NOT NULL,
     "hash" TEXT,
     "custodian_id" INTEGER REFERENCES "organization" ("id") NOT NULL,
@@ -505,9 +616,8 @@ CREATE INDEX IF NOT EXISTS idx_document_format ON "document" ("format");
 
 CREATE TABLE IF NOT EXISTS "task_has_documents" (
     "task_id" INTEGER REFERENCES "task" ("id") NOT NULL,
-    "document_id" INTEGER REFERENCES "document" ("id") NOT NULL,
-    "io_type" io_type,
-    PRIMARY KEY ("task_id", "document_id", "io_type")
+    "document_id" INTEGER REFERENCES "document" ("id") NOT NULL
+    PRIMARY KEY ("task_id", "document_id")
 );
 
 CREATE TABLE IF NOT EXISTS "document_has_patients" (
@@ -543,7 +653,7 @@ ON CONFLICT (code) DO NOTHING;
 
 INSERT INTO data_type_codes (code, name_en, name_fr) 
 VALUES 
-    ('alir', 'Aligned Reads', 'Fragments alignés'),
+    ('alignment', 'Aligned Reads', 'Fragments alignés'),
     ('snv', 'Germline SNV', 'SNV germinal'),
     ('ssnv', 'Somatic SNV', 'SNV somatic'),
     ('gcnv', 'Germline CNV', 'CNV germinal'),
@@ -596,6 +706,147 @@ VALUES
     (1, 'NEBA', 'Normal Exome Bioinformatic Analysis', 'Analyse bioinformatique d''exomes normaux'),
     (2, 'TRBA', 'Transcriptome Bioinformatic Analysis', 'Analyse bioinformatique de transcriptomes'),
     (3, 'TEBA', 'Tumoral Exome Bioinformatic Analysis', 'Analyse bioinformatique d''exomes tumoraux'),
-    (4, 'TNEBA', 'Tumor-Normal Exomes Bioinformatic Analysis', 'Analyse bioinformatique des exomes tumoraux et normaux')
+    (4, 'TNEBA', 'Tumor-Normal Exomes Bioinformatic Analysis', 'Analyse bioinformatique des exomes tumoraux et normaux'),
     (5, 'GGBA', 'Germline Genome Bioinformatic Analysis', 'Analyse bioinformatique de génomes germinaux') 
 ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO "organization_categories" ("code", "name_en", "name_fr") VALUES
+('diagnostic_laboratory', 'Diagnostic Laboratory', 'Laboratoire de diagnostic'),
+('healthcare_provider', 'Healthcare Provider', 'Fournisseur de soins de santé'),
+('research_institute', 'Research Institute', 'Institut de recherche'),
+('sequencing_center', 'Sequencing Center', 'Centre de séquençage')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "practitioner_roles" ("code", "name_en", "name_fr") VALUES
+('doctor', 'Doctor', 'Médecin'),
+('geneticist', 'Geneticist', 'Généticien'),
+('bioinformatician', 'Bioinformatician', 'Bioinformaticien'),
+('genetic_counsellor', 'Genetic Counsellor', 'Conseiller en génétique'),
+('administrative_assistant', 'Administrative Assistant', 'Adjoint administratif'),
+('resident', 'Resident', 'Résident')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "sexes" ("code", "name_en", "name_fr") VALUES
+('male', 'Male', 'Masculin'),
+('female', 'Female', 'Féminin'),
+('unknown', 'Unknown', 'Inconnu')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "observation_categories" ("code", "name_en", "name_fr") VALUES
+('social_history', 'Social History', 'Histoire sociale'),
+('vital_sign', 'Vital Sign', 'Signe vital'),
+('imaging', 'Imaging', 'Imagerie'),
+('laboratory', 'Laboratory', 'Laboratoire'),
+('procedure', 'Procedure', 'Procédure'),
+('survey', 'Survey', 'Questionnaire'),
+('exam', 'Exam', 'Examen'),
+('therapy', 'Therapy', 'Thérapie'),
+('activity', 'Activity', 'Activité')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "genome_analysis_types" ("code", "name_en", "name_fr") VALUES
+('germline', 'Germline', 'Germinal'),
+('somatic', 'Somatic', 'Somatique')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "family_analysis_types" ("code", "name_en", "name_fr") VALUES
+('single', 'Single', 'Individuel'),
+('familial', 'Familial', 'Familial'),
+('both', 'Both', 'Les deux')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "life_stage_types" ("code", "name_en", "name_fr") VALUES
+('prenatal', 'Prenatal', 'Prénatal'),
+('postnatal', 'Postnatal', 'Postnatal'),
+('both', 'Both', 'Les deux')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "case_types" ("code", "name_en", "name_fr") VALUES
+('single_germline', 'Single Germline', 'Germinal individuel'),
+('familial_germline', 'Familial Germline', 'Germinal familial'),
+('tumor', 'Tumor', 'Tumeur')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "request_statuses" ("code", "name_en", "name_fr") VALUES
+('unknown', 'Unknown', 'Inconnu'),
+('draft', 'Draft', 'Brouillon'),
+('active', 'Active', 'Actif'),
+('revoke', 'Revoke', 'Révoqué'),
+('completed', 'Completed', 'Terminé'),
+('on-hold', 'On-hold', 'En attente'),
+('incomplete', 'Incomplete', 'Incomplet')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "request_priorities" ("code", "name_en", "name_fr") VALUES
+('routine', 'Routine', 'Routinière'),
+('urgent', 'Urgent', 'Urgente'),
+('asap', 'Asap', 'Dès que possible'),
+('stat', 'Stat', 'Immédiatement')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "event_types" ("code", "name_en", "name_fr") VALUES
+('unknown', 'Unknown', 'Inconnu'),
+('baseline', 'Baseline', 'De base'),
+('follow_up', 'Follow Up', 'Suivi'),
+('treatment', 'Treatment', 'Traitement')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "experimental_strategies" ("code", "name_en", "name_fr") VALUES
+('wgs', 'WGS', 'WGS'),
+('wxs', 'WXS', 'WXS'),
+('wts', 'WTS', 'WTS')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "technology_platforms" ("code", "name_en", "name_fr") VALUES
+('illumina', 'Illumina', 'Illumina'),
+('pacbio', 'Pacbio', 'PacBio'),
+('nanopore', 'Nanopore', 'Nanopore')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "family_relationships" ("code", "name_en", "name_fr") VALUES
+('mother', 'Mother', 'Mère'),
+('father', 'Father', 'Père'),
+('brother', 'Brother', 'Frère'),
+('sister', 'Sister', 'Sœur')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "obs_interpretations" ("code", "name_en", "name_fr") VALUES
+('positive', 'Positive', 'Positif'),
+('negative', 'Negative', 'Négatif')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "sample_categories" ("code", "name_en", "name_fr") VALUES
+('specimen', 'Specimen', 'Spécimen'),
+('sample', 'Sample', 'Échantillon')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "sample_types" ("code", "name_en", "name_fr") VALUES
+('dna', 'Dna', 'ADN'),
+('rna', 'Rna', 'ARN'),
+('blood', 'Blood', 'Sang'),
+('solid_tissue', 'Solid Tissue', 'Tissu solide')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "histology_types" ("code", "name_en", "name_fr") VALUES
+('tumoral', 'Tumoral', 'Tumoral'),
+('normal', 'Normal', 'Normal')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "affected_statuses" ("code", "name_en", "name_fr") VALUES
+('affected', 'Affected', 'Atteint'),
+('non_affected', 'Non Affected', 'Non atteint'),
+('unknown', 'Unknown', 'Inconnu')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "age_units" ("code", "name_en", "name_fr") VALUES
+('day', 'Day', 'Jour'),
+('month', 'Month', 'Mois'),
+('year', 'Year', 'An')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO "data_categories" ("code", "name_en", "name_fr") VALUES
+('clinical', 'Clinical', 'Clinique'),
+('genomic', 'Genomic', 'Génomique')
+ON CONFLICT (code) DO NOTHING;
+
+
