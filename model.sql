@@ -596,5 +596,6 @@ VALUES
     (1, 'NEBA', 'Normal Exome Bioinformatic Analysis', 'Analyse bioinformatique d''exomes normaux'),
     (2, 'TRBA', 'Transcriptome Bioinformatic Analysis', 'Analyse bioinformatique de transcriptomes'),
     (3, 'TEBA', 'Tumoral Exome Bioinformatic Analysis', 'Analyse bioinformatique d''exomes tumoraux'),
-    (4, 'TNEBA', 'Tumor-Normal Exomes Bioinformatic Analysis', 'Analyse bioinformatique des exomes tumoraux et normaux') 
+    (4, 'TNEBA', 'Tumor-Normal Exomes Bioinformatic Analysis', 'Analyse bioinformatique des exomes tumoraux et normaux')
+    (5, 'GGBA', 'Germline Genome Bioinformatic Analysis', 'Analyse bioinformatique de génome germinal') 
 ON CONFLICT (id) DO NOTHING;
