@@ -1,0 +1,11 @@
+
+      "resourceType": "Organization",
+      "id": "LDM-CHUQ",
+      "type": [ {
+        "coding": [ {
+          "code": "labdx",
+          "display": "Diagnostic Laboratory"
+        } ]
+      } ],
+      "name": "Laboratoire de diagnostic moléculaire, CHU de Québec",
+      "alias": [ "LDM-CHUQ" ]

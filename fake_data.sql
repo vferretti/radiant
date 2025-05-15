@@ -1,7 +1,7 @@
 -- Active: 1746963621814@@127.0.0.1@5435@radiant
 -- Actors
 INSERT INTO organization (id, code, name, category) VALUES
-  (1, 'CHOP', 'ChilDrn Hospital of Philadelphia', 'healthcare_provider'),
+  (1, 'CHOP', 'Children Hospital of Philadelphia', 'healthcare_provider'),
   (2, 'UCSF', 'University of California San-Francisco', 'healthcare_provider'),
   (3, 'CHUSJ', 'Centre hospitalier universitaire Sainte-Justine', 'healthcare_provider'),
   (4, 'LDM-CHUSJ', 'Laboratoire de diagnostic moléculaire, CHU Sainte-Justine', 'diagnostic_laboratory'),
@@ -359,47 +359,47 @@ ON CONFLICT (id) DO NOTHING;
 (21, 1, 60, 2, 21, 'familial_germline', 'active', 'routine', 'postnatal', 14, 6, '2021-09-12T13:08:00-04:00', '2021-09-12T13:08:00-04:00', False, 'This is a diagnosis hypothesis', 'Administrative comment')
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO family (id, submitter_id, case_id, proband_id, family_member_id, relationship_to_proband, affected_status) VALUES
-(1, '803', 1, 3, 1, 'mother', 'affected'),
-(2, '803', 1, 3, 2, 'father', 'non_affected'),
-(3, '804', 2, 4, 5, 'father', 'non_affected'),
-(4, '804', 2, 4, 6, 'mother', 'affected'),
-(5, '805', 3, 8, 7, 'father', 'non_affected'),
-(6, '805', 3, 8, 9, 'mother', 'unknown'),
-(7, '806', 4, 10, 11, 'father', 'non_affected'),
-(8, '806', 4, 10, 12, 'mother', 'non_affected'),
-(9, '807', 5, 15, 13, 'mother', 'affected'),
-(10, '807', 5, 15, 14, 'father', 'non_affected'),
-(11, '836', 6, 16, 17, 'mother', 'non_affected'),
-(12, '836', 6, 16, 18, 'father', 'non_affected'),
-(13, '839', 7, 20, 19, 'mother', 'non_affected'),
-(14, '839', 7, 20, 21, 'father', 'affected'),
-(15, '869', 9, 23, 24, 'mother', 'non_affected'),
-(16, '869', 9, 23, 25, 'father', 'non_affected'),
-(17, '870', 10, 27, 26, 'father', 'unknown'),
-(18, '870', 10, 27, 28, 'mother', 'non_affected'),
-(19, '871', 11, 30, 29, 'father', 'non_affected'),
-(20, '871', 11, 30, 31, 'mother', 'affected'),
-(21, '912', 12, 34, 32, 'father', 'non_affected'),
-(22, '912', 12, 34, 33, 'mother', 'non_affected'),
-(23, '948', 13, 37, 35, 'father', 'unknown'),
-(24, '948', 13, 37, 36, 'mother', 'non_affected'),
-(25, '950', 14, 39, 38, 'mother', 'non_affected'),
-(26, '950', 14, 39, 40, 'father', 'non_affected'),
-(27, '951', 15, 42, 41, 'father', 'non_affected'),
-(28, '951', 15, 42, 43, 'mother', 'affected'),
-(29, '952', 16, 44, 45, 'father', 'non_affected'),
-(30, '952', 16, 44, 46, 'mother', 'non_affected'),
-(31, '953', 17, 47, 48, 'father', 'affected'),
-(32, '953', 17, 47, 49, 'mother', 'non_affected'),
-(33, '954', 18, 50, 51, 'mother', 'non_affected'),
-(34, '954', 18, 50, 52, 'father', 'unknown'),
-(35, '956', 19, 55, 53, 'mother', 'non_affected'),
-(36, '956', 19, 55, 54, 'father', 'non_affected'),
-(37, '958', 20, 58, 56, 'father', 'affected'),
-(38, '958', 20, 58, 57, 'mother', 'non_affected'),
-(39, '990', 21, 60, 59, 'father', 'non_affected'),
-(40, '990', 21, 60, 61, 'mother', 'non_affected')
+INSERT INTO family (id, submitter_id, case_id, family_member_id, relationship_to_proband, affected_status) VALUES
+(1, '803', 1, 1, 'mother', 'affected'),
+(2, '803', 1, 2, 'father', 'non_affected'),
+(3, '804', 2, 5, 'father', 'non_affected'),
+(4, '804', 2, 6, 'mother', 'affected'),
+(5, '805', 3, 7, 'father', 'non_affected'),
+(6, '805', 3, 9, 'mother', 'unknown'),
+(7, '806', 4, 11, 'father', 'non_affected'),
+(8, '806', 4, 12, 'mother', 'non_affected'),
+(9, '807', 5, 13, 'mother', 'affected'),
+(10, '807', 5, 14, 'father', 'non_affected'),
+(11, '836', 6, 17, 'mother', 'non_affected'),
+(12, '836', 6, 18, 'father', 'non_affected'),
+(13, '839', 7, 19, 'mother', 'non_affected'),
+(14, '839', 7, 21, 'father', 'affected'),
+(15, '869', 9, 24, 'mother', 'non_affected'),
+(16, '869', 9, 25, 'father', 'non_affected'),
+(17, '870', 10, 26, 'father', 'unknown'),
+(18, '870', 10, 28, 'mother', 'non_affected'),
+(19, '871', 11, 29, 'father', 'non_affected'),
+(20, '871', 11, 31, 'mother', 'affected'),
+(21, '912', 12, 32, 'father', 'non_affected'),
+(22, '912', 12, 33, 'mother', 'non_affected'),
+(23, '948', 13, 35, 'father', 'unknown'),
+(24, '948', 13, 36, 'mother', 'non_affected'),
+(25, '950', 14, 38, 'mother', 'non_affected'),
+(26, '950', 14, 40, 'father', 'non_affected'),
+(27, '951', 15, 41, 'father', 'non_affected'),
+(28, '951', 15, 43, 'mother', 'affected'),
+(29, '952', 16, 45, 'father', 'non_affected'),
+(30, '952', 16, 46, 'mother', 'non_affected'),
+(31, '953', 17, 48, 'father', 'affected'),
+(32, '953', 17, 49, 'mother', 'non_affected'),
+(33, '954', 18, 51, 'mother', 'non_affected'),
+(34, '954', 18, 52, 'father', 'unknown'),
+(35, '956', 19, 53, 'mother', 'non_affected'),
+(36, '956', 19, 54, 'father', 'non_affected'),
+(37, '958', 20, 56, 'father', 'affected'),
+(38, '958', 20, 57, 'mother', 'non_affected'),
+(39, '990', 21, 59, 'father', 'non_affected'),
+(40, '990', 21, 61, 'mother', 'non_affected')
 ON CONFLICT (id) DO NOTHING;
 
 
@@ -1306,13 +1306,13 @@ INSERT INTO "task_has_sequencing_experiments" (
 (61, 61)
 ON CONFLICT(task_id, sequencing_experiment_id) DO NOTHING;
 
-INSERT INTO "task_has_workflows" (
+INSERT INTO "task_workflows" (
     id,
     task_id,
     workflow_name,
     version,
     parameter,
-    rank
+    rank_in_task
 ) VALUES
 (1, 1, 'Dragen', '4.2.4', 'build=GRch38', 1),
 (2, 2, 'Dragen', '4.2.4', 'build=GRch38', 1),
