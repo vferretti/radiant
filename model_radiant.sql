@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS "request" (
     "performer_lab_id" INTEGER REFERENCES "organization"("id"),
     "created_on" TIMESTAMP NOT NULL,
     "updated_on" TIMESTAMP NOT NULL
-)
+);
 
 CREATE INDEX IF NOT EXISTS idx_request_status ON "request" ("status");
 CREATE INDEX IF NOT EXISTS idx_request_priority ON "request" ("priority");
