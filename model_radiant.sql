@@ -127,7 +127,6 @@ CREATE TABLE IF NOT EXISTS "request" (
     "ordering_physician" TEXT,
     "ordering_organisation_id" INTEGER REFERENCES "organization"("id"),
     "order_number" TEXT,
-    "performer_lab_id" INTEGER REFERENCES "organization"("id"),
     "created_on" TIMESTAMP NOT NULL,
     "updated_on" TIMESTAMP NOT NULL
 );
@@ -153,6 +152,7 @@ CREATE TABLE IF NOT EXISTS "case" (
     "primary_condition" TEXT,
     "panel_id" INTEGER,
     "request_id" INTEGER REFERENCES "request"("id"),
+    "performer_lab_id" INTEGER REFERENCES "organization"("id"),
     "note" TEXT,
     "created_on" TIMESTAMP NOT NULL,
     "updated_on" TIMESTAMP NOT NULL
@@ -216,6 +216,7 @@ CREATE TABLE IF NOT EXISTS "sequencing_experiment" (
     "status" TEXT NOT NULL REFERENCES "statuses"("code"),
     "aliquot" TEXT NOT NULL,
     "request_id" INTEGER REFERENCES "request"("id"),
+    "performer_lab_id" INTEGER REFERENCES "organization"("id"),
     "run_name" TEXT,
     "run_alias" TEXT,
     "run_date" date,
